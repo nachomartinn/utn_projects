@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="870.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PantallaRevisionManual">
+
+   <children>
+
+      <!-- Botón visible al inicio -->
+      <Button fx:id="btnRegistrarRevision" layoutX="20" layoutY="20" onAction="#opcionRegistrarRevisionManual" text="Registrar Resultado de Revisión Manual" />
+
+      <!-- Contenedor completo de lo que debe mostrarse/ocultarse -->
+      <AnchorPane fx:id="contenedorRevisionCompleto" layoutX="0" layoutY="67.0" prefHeight="800.0" prefWidth="738.0">
+         <children>
+
+            <!-- Panel de revisión -->
+            <AnchorPane fx:id="panelRevision" layoutX="0" layoutY="0" prefHeight="663.0" prefWidth="738.0">
+               <children>
+                  <Label layoutX="20" layoutY="10" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Eventos Sísmicos" />
+
+                  <TableView fx:id="tablaEventos" layoutX="20" layoutY="40" prefHeight="310" prefWidth="701.0">
+                     <columns>
+                        <TableColumn fx:id="columnaFecha" prefWidth="140" text="Fecha y Hora" />
+                        <TableColumn fx:id="columnaLatEpicentro" prefWidth="100" text="Latitud Epicentro" />
+                        <TableColumn fx:id="columnaLatHipocentro" prefWidth="100" text="Latitud Hipocentro" />
+                        <TableColumn fx:id="columnaLongEpicentro" prefWidth="80" text="Longitud Epicentro" />
+                        <TableColumn fx:id="columnaLongHipocentro" prefWidth="135.99996948242188" text="Longitud Hipocentro" />
+                        <TableColumn fx:id="columnaMagnitud" prefWidth="143.99993896484375" text="Magnitud" />
+                     </columns>
+                  </TableView>
+
+                  <Button fx:id="btnSeleccionarEvento" layoutX="580.0" layoutY="362.0" onAction="#tomarSeleccionDeEvento" prefHeight="30" prefWidth="140" text="Seleccionar Evento" />
+                  <Label layoutX="20" layoutY="410" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Datos del evento seleccionado" />
+
+                  <TableView fx:id="tablaDetalles" layoutX="20" layoutY="440" prefHeight="190.0" prefWidth="702.0">
+                     <columns>
+                        <TableColumn fx:id="columnaPropiedad" prefWidth="120" text="Propiedad" />
+                        <TableColumn fx:id="columnaNombre" prefWidth="200" text="Nombre" />
+                        <TableColumn fx:id="columnaDescripcion" prefWidth="240" text="Descripción" />
+                     </columns>
+                  </TableView>
+
+                  <Button fx:id="btnModificar" disable="true" layoutX="422.0" layoutY="641.0" onAction="#tomarSeleccionDeEvento" prefHeight="30" prefWidth="140" text="Modificar Evento" />
+                  <Button fx:id="btnVisualizarMapa" disable="true" layoutX="580.0" layoutY="641.0" prefHeight="30" prefWidth="140" text="Visualizar Mapa" />
+               </children>
+            </AnchorPane>
+
+            <!-- Botones finales -->
+            <AnchorPane layoutX="15.0" layoutY="685.0" prefHeight="74.0" prefWidth="580">
+               <children>
+                  <Label layoutX="14.0" layoutY="1.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Solicitar Selección" />
+                  <Button fx:id="btnRechazar" disable="true" layoutX="14.0" layoutY="40.0" onAction="#tomarOpcionRechazarEvento" prefHeight="30" prefWidth="162.0" text="Rechazar Evento" />
+                  <Button fx:id="btnConfirmar" disable="true" layoutX="197.0" layoutY="40.0" onAction="#tomarOpcionConfirmarEvento" prefHeight="30" prefWidth="143.0" text="Confirmar Evento" />
+                  <Button fx:id="btnSolicitarRevision" disable="true" layoutX="360.0" layoutY="40.0" onAction="#tomarOpcionSolicitarRevisionExperto" prefHeight="30" prefWidth="173.0" text="Solicitar Revisión a experto" />
+               </children>
+            </AnchorPane>
+
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
