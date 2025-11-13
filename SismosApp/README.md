@@ -64,16 +64,15 @@ Cada estado define su propio comportamiento en respuesta a acciones del sistema 
 
 ## 🏗️ Arquitectura del proyecto
 
-Estructura basada en capas para mejorar la mantenibilidad y escalabilidad:
 📦 src/main/java
-├— application/ → Punto de entrada (App.java)
-├— controllers/ → Controladores JavaFX
-├— service/ → Lógica de negocio
-├— repository/ → Acceso a datos (Hibernate / JPA)
-│ └— db/ → Contexto de base de datos (DbContext.java)
-├— models/ → Entidades JPA y clases de dominio
-├— dto/ → Data Transfer Objects
-└— seeder/ → Inicialización de datos (DataSeeder.java)
+├─ application/ → Punto de entrada (App.java)
+├─ controllers/ → Controladores JavaFX
+├─ service/ → Lógica de negocio
+├─ repository/ → Acceso a datos (Hibernate / JPA)
+│ └─ db/ → Contexto de base de datos (DbContext.java)
+├─ models/ → Entidades JPA y clases de dominio
+├─ dto/ → Data Transfer Objects
+└─ seeder/ → Inicialización de datos (DataSeeder.java)
 
 ---
 
