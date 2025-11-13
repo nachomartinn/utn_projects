@@ -1,0 +1,127 @@
+/* === Estilo general === */
+.root, .anchor-pane, .scroll-pane, .vbox {
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+    -fx-text-fill: #333333;
+}
+
+/* === ScrollPane === */
+.scroll-pane {
+    -fx-background: #FFFFFF;
+    -fx-border-color: transparent;
+}
+.scroll-pane .viewport {
+    -fx-background-color: #FFFFFF;
+}
+
+/* === Labels === */
+.label {
+    -fx-text-fill: #2B2B2B;
+}
+.label:disabled {
+    -fx-opacity: 0.6;
+}
+
+/* === Botones generales === */
+.button {
+    -fx-background-color: #E8D9B9; /* beige suave */
+    -fx-text-fill: #2B2B2B;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-padding: 6 14 6 14;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+    -fx-transition: all 0.2s ease;
+}
+.button:hover {
+    -fx-background-color: #DCC9A6;
+        -fx-scale-x: 1.05;
+        -fx-scale-y: 1.05;
+        -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2);
+}
+.button:pressed {
+    -fx-background-color: #CBB891;
+}
+.button:disabled {
+    -fx-background-color: #F3F3F3;
+    -fx-text-fill: #999999;
+    -fx-effect: none;
+}
+
+/* === Botones destacados === */
+#btnRegistrarRevision {
+    -fx-background-color: #E8D9B9;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+#btnRegistrarRevision:hover {
+    -fx-background-color: #DCC9A6;
+}
+
+/* === Tablas === */
+.table-view {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #DDDDDD;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 6 6 0 0;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-text-fill: #444444;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: transparent transparent #F0F0F0 transparent;
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #E8D9B9;
+    -fx-text-fill: #2B2B2B;
+}
+
+/* === Ajuste de columnas === */
+.table-column {
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* === Contenedores === */
+.vbox, .hbox {
+    -fx-background-color: transparent;
+}
+
+/* === Botón cerrar (más discreto) === */
+#btnCerrar {
+    -fx-background-color: #EEEEEE;
+    -fx-text-fill: #333333;
+}
+#btnCerrar:hover {
+    -fx-background-color: #DDDDDD;
+}
+
+/* === Sombras y separación visual === */
+#panelRevision {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+    -fx-padding: 15;
+}
+
+/* === Espaciado y orden === */
+.table-view, .button {
+    -fx-focus-traversable: false;
+}
