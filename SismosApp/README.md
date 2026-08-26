@@ -17,19 +17,21 @@ Combina una interfaz simple con persistencia en base de datos mediante Hibernate
 1. Abrir una terminal en la raíz del proyecto (donde está `pom.xml`).
 2. Ejecutar el siguiente comando:
 
-```terminal
+```bash
 mvn javafx:run
 ```
+
+---
 
 ## 🚀 Características principales
 
 - Interfaz gráfica en **JavaFX (FXML + CSS)**.
-- Persistencia de datos con **Hibernate ORM 6** y **JPA (Jakarta Persistence)**.
-- **Base de datos H2 embebida** para desarrollo y pruebas.
-- **Arquitectura en capas**: `controllers`, `service`, `repository`, `models`, `dto`.
+- Persistencia de datos con **Hibernate ORM 6.4** y **JPA (Jakarta Persistence 3.1)**.
+- **Base de datos H2 embebida** para desarrollo y pruebas (se puebla automáticamente mediante `DataSeeder` si está vacía).
+- **Arquitectura en capas**: `controllers`, `service`, `repository`, `models`, `dto`, `utilities`.
 - Implementación del **Patrón State** para representar los distintos estados de un evento sísmico.
-- Flujo de **revisión manual de eventos** con detección automática, validación por expertos y confirmación final.
-- Soporte para **muestras sísmicas** por estación sismológica y análisis detallado desde la interfaz.
+- Flujo de **revisión manual de eventos** con detección automática, validación por expertos y confirmación o rechazo final.
+- Soporte para **muestras sísmicas** por estación sismológica y análisis detallado de sismogramas desde la interfaz.
 
 ---
 
@@ -38,41 +40,52 @@ mvn javafx:run
 | Tecnología                  | Versión / Uso                                |
 |-----------------------------|----------------------------------------------|
 | **Java**                    | 21                                           |
-| **JavaFX**                  | 21 (`controls`, `fxml`, `graphics`)          |
+| **JavaFX**                  | 21.0.3 (`controls`, `fxml`, `graphics`)      |
 | **Maven**                   | Gestión de dependencias y build              |
-| **Hibernate ORM**           | 6.x                                          |
-| **H2 Database**             | Base de datos embebida (modo desarrollo)     |
-| **Jakarta Persistence API** | Mapeo JPA para entidades                     |
-| **Lombok**                  | Reducción de boilerplate en entidades y DTOs |
+| **Hibernate ORM**           | 6.4.4.Final                                  |
+| **H2 Database**             | 2.3.232 (Base de datos embebida)             |
+| **Jakarta Persistence API** | 3.1.0 (Mapeo JPA para entidades)             |
+| **Lombok**                  | 1.18.30 (Reducción de boilerplate)           |
 
 ---
 
 ## 🧩 Patrón de diseño
 
-El proyecto aplica el **Patrón State** para los eventos sísmicos, definidos en:
+El proyecto aplica el **Patrón State** para gestionar el ciclo de vida y las transiciones de estado de un evento sísmico.
 
-Estados implementados:
-- `EstadoAutodetectado`
-- `EstadoEnRevisionExperto`
-- `EstadoConfirmado`
-- `EstadoRechazado`
-- `EstadoBloqueado`
+- **Clase Base Abstracta:** `EstadoEventoSismico`
+- **Estados Concretos Implementados:**
+  - `EstadoAutodetectado`: Estado inicial tras la detección del evento.
+  - `EstadoEnRevisionExperto`: Evento bajo evaluación por parte de un analista.
+  - `EstadoConfirmado`: Evento validado y confirmado.
+  - `EstadoRechazado`: Evento descartado o invalidadas sus lecturas.
+  - `EstadoBloqueado`: Evento bloqueado temporalmente durante su procesamiento.
 
-Cada estado define su propio comportamiento en respuesta a acciones del sistema o del usuario (por ejemplo, bloqueo, revisión o confirmación del evento).
+Cada estado define las transiciones válidas e invalida acciones no permitidas en su fase actual mediante excepciones de tipo `IllegalStateException`.
 
 ---
 
 ## 🏗️ Arquitectura del proyecto
 
-📦 src/main/java
-├─ application/ → Punto de entrada (App.java)
-├─ controllers/ → Controladores JavaFX
-├─ service/ → Lógica de negocio
-├─ repository/ → Acceso a datos (Hibernate / JPA)
-│ └─ db/ → Contexto de base de datos (DbContext.java)
-├─ models/ → Entidades JPA y clases de dominio
-├─ dto/ → Data Transfer Objects
-└─ seeder/ → Inicialización de datos (DataSeeder.java)
+```text
+src/
+└── main/
+    ├── java/
+    │   ├── application/        # Punto de entrada JavaFX (App.java)
+    │   ├── controllers/        # Controladores de vista y gestor de flujo (GestorRevisionManual, PantallaRevisionManual)
+    │   ├── dto/                # Data Transfer Objects (EventoSismicoDTO, EstacionSismologicaDTO, DatosSismicosDTO)
+    │   ├── models/             # Entidades JPA y modelo de dominio
+    │   │   └── estados/        # Implementación del Patrón State (EstadoEventoSismico y derivados)
+    │   ├── repository/         # Acceso a datos con JPA/Hibernate (EventoSismicoRepository, etc.)
+    │   │   └── db/             # Contexto de base de datos y EntityManager (DbContext.java)
+    │   ├── seeder/             # Inicialización y poblado de datos (DataSeeder.java)
+    │   ├── service/            # Lógica de negocio (EventoService, SesionService)
+    │   └── utilities/          # Constantes y utilidades de rutas (Paths.java)
+    └── resources/
+        ├── META-INF/           # Configuración de JPA (persistence.xml)
+        ├── PantallaRevisionManual.fxml  # Vista principal FXML
+        └── styles.css          # Estilos CSS de la interfaz
+```
 
 ---
 
@@ -81,7 +94,10 @@ Cada estado define su propio comportamiento en respuesta a acciones del sistema 
 | Propósito                     | Archivo                                          |
 |-------------------------------|--------------------------------------------------|
 | **Punto de entrada**          | `src/main/java/application/App.java`             |
-| **UI principal**              | `src/main/resources/PantallaRevisionManual.fxml` |
+| **Gestor de flujo**           | `src/main/java/controllers/GestorRevisionManual.java` |
+| **Controlador de vista**      | `src/main/java/controllers/PantallaRevisionManual.java` |
+| **Servicio de negocio**       | `src/main/java/service/EventoService.java`       |
+| **UI principal (FXML)**       | `src/main/resources/PantallaRevisionManual.fxml` |
 | **Estilos**                   | `src/main/resources/styles.css`                  |
 | **Configuración JPA**         | `src/main/resources/META-INF/persistence.xml`    |
 | **Contexto DB (Hibernate)**   | `src/main/java/repository/db/DbContext.java`     |
